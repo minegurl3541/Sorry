@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>I’m Sorry</title>
+  <style>
+    body {
+      background-color: white;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    #sorryBtn {
+      margin-top: 40vh;
+      padding: 20px 40px;
+      font-size: 24px;
+      color: white;
+      background-color: pink;
+      border: none;
+      border-radius: 30px;
+      box-shadow: 0 0 15px white, 0 0 25px deeppink;
+      animation: glow 2s infinite;
+    }
+
+    #giftBox {
+      display: none;
+      font-size: 60px;
+      background: none;
+      border: none;
+      margin-top: 20px;
+      animation: glowStar 2s infinite;
+      position: relative;
+    }
+
+    #giftBox::after {
+      content: '✨✨';
+      position: absolute;
+      top: -25px;
+      right: -30px;
+      font-size: 24px;
+      color: gold;
+    }
+
+    #heartContainer {
+      display: none;
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .heart-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      transition: transform 0.3s;
+      border: 2px solid white;
+    }
+
+    #loveText {
+      display: none;
+      margin-top: 20px;
+      font-size: 26px;
+      font-weight: bold;
+      color: deeppink;
+      text-shadow: 0 0 10px pink, 0 0 20px red;
+      animation: appearText 4s steps(30, end) forwards;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+    }
+
+    @keyframes appearText {
+      to {
+        width: 100%;
+      }
+    }
+
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px white; }
+      50% { box-shadow: 0 0 20px deeppink; }
+      100% { box-shadow: 0 0 5px white; }
+    }
+
+    @keyframes glowStar {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <button id="sorryBtn">Sorry</button>
+  <button id="giftBox">🎁</button>
+  <div id="loveText">I love you sweetheart forever</div>
+  <div id="heartContainer"></div>
+
+  <audio id="bgMusic" src="https://files.catbox.moe/pjmxo8.mp3" preload="auto"></audio>
+
+  <script>
+    const sorryBtn = document.getElementById('sorryBtn');
+    const giftBox = document.getElementById('giftBox');
+    const heartContainer = document.getElementById('heartContainer');
+    const music = document.getElementById('bgMusic');
+    const loveText = document.getElementById('loveText');
+
+    const images = [
+      "https://i.ibb.co/ZvsszqY/74022-DD7-8-A77-499-B-AD48-B434418-A07-DF.png",
+      "https://i.ibb.co/mr8Ts3bj/IMG-3713.jpg",
+      "https://i.ibb.co/212dc58G/IMG-3682.jpg",
+      "https://i.ibb.co/JFnRgvhn/IMG-2265.jpg",
+      "https://i.ibb.co/6RxyqmsJ/IMG-2259.jpg",
+      "https://i.ibb.co/N286QdRW/IMG-1840.jpg",
+      "https://i.ibb.co/6JqB9yNG/IMG-1167.jpg",
+      "https://i.ibb.co/sp4DqPVw/061a4f7e-769b-4a75-9093-cf1f3b7dfc33.jpg",
+      "https://i.ibb.co/fYdXsGmc/3d7ad99c-f7b5-4f91-ab90-059b6d784041.jpg",
+      "https://i.ibb.co/WNkmFts1/IMG-8588.jpg",
+      "https://i.ibb.co/PG42RPLX/IMG-8587.jpg",
+      "https://i.ibb.co/Ng6mBp3Q/3-FAA830-C-C295-4319-BEAA-A0-FEB5-BF62-AC.jpg",
+      "https://i.ibb.co/JWgtvPLJ/939b3a43-cfeb-4486-a9b0-dc0daca955eb.jpg",
+      "https://i.ibb.co/qYyk5Cgd/IMG-4088.jpg",
+      "https://i.ibb.co/Kpm8Lf4x/IMG-4085.jpg",
+      "https://i.ibb.co/nNRG3vCc/IMG-2256.jpg",
+      "https://i.ibb.co/chs0BxfP/IMG-2263.jpg",
+      "https://i.ibb.co/dYgJZqF/IMG-1109.jpg",
+      "https://i.ibb.co/xq4WJQvD/3293e8ec-0ace-4f9b-a5b8-198f2957542e.jpg",
+      "https://i.ibb.co/BKjPRcdc/95648506-2903-4483-8b76-ee72e99a6cf3.jpg"
+    ];
+
+    sorryBtn.addEventListener('click', () => {
+      sorryBtn.style.display = 'none';
+      giftBox.style.display = 'inline-block';
+    });
+
+    giftBox.addEventListener('click', () => {
+      giftBox.style.display = 'none';
+      heartContainer.style.display = 'block';
+      loveText.style.display = 'block';
+      music.play();
+      createHeartImages();
+    });
+
+    function createHeartImages() {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const radius = 180;
+
+      images.forEach((src, i) => {
+        const angle = (Math.PI * 2 / images.length) * i;
+        const x = centerX + 160 * Math.sin(angle) * Math.pow(Math.sin(angle), 3);
+        const y = centerY - (130 * Math.cos(angle) - 50 * Math.cos(2 * angle) - 20 * Math.cos(3 * angle));
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'heart-img';
+        img.style.left = `${x}px`;
+        img.style.top = `${y}px`;
+
+        heartContainer.appendChild(img);
+      });
+    }
+  </script>
+
+</body>
+</html>
